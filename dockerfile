@@ -27,7 +27,7 @@ RUN git clone https://github.com/eclipse-zenoh/zenoh-cpp.git . && \
     cmake --install .
 
 # stage 3 
-FROM ubuntu:20.04
+FROM env
 
 
 COPY --from=build /root/libs/zenohc /usr/local
