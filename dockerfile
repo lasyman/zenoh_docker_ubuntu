@@ -35,4 +35,6 @@ COPY --from=build /root/libs/zenohcxx /usr/local
 
 WORKDIR /root
 
+RUN ldconfig
+
 CMD [ "/bin/bash" ]
