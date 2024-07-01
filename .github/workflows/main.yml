@@ -1,0 +1,27 @@
+name: Build Zenoh Docker Image
+
+on:
+  push:
+    branches:
+      - main  # 或者您希望监控的分支
+  pull_request:
+    branches:
+      - main  # 或者您希望监控的分支
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Build Docker Image
+      run: docker build -t zenoh-image .
+
+    - name: Push Docker Image (Optional)
+      if: github.ref == 'refs/heads/main'  # 仅在 main 分支推送时执行
+      run: |
+        echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        docker tag zenoh-image ${{ secrets.DOCKERHUB_USERNAME }}/zenoh-image:latest
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/zenoh-image:latest
