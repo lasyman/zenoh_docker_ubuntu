@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 AS env
+FROM registry.lyy520.fun:8443/ubuntu:20.04 AS env
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     apt-utils curl g++ git cmake vim cargo tzdata \
