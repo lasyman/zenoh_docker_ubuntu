@@ -23,5 +23,5 @@ jobs:
       if: github.ref == 'refs/heads/main'  # 仅在 main 分支推送时执行
       run: |
         echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        docker tag zenoh-image ${{ secrets.DOCKERHUB_USERNAME }}/zenoh-image:latest
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/zenoh-image:latest
+        docker tag zenoh-image registry.lyy520.fun:8443/zenoh_env:latest
+        docker push registry.lyy520.fun:8443/zenoh_env:latest
