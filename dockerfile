@@ -11,6 +11,14 @@ WORKDIR /root
 # stage 2 build
 FROM env AS build
 
+WORKDIR /root/protobuf
+
+RUN git clone https://github.com/lasyman/protobuf.git . && \
+    mkdir build && cd build && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=/root/libs/protobuf -Dprotobuf_BUILD_TESTS=OFF && \
+    make && \
+    make install
+
 WORKDIR /root/zenoh-c
 
 RUN git clone https://github.com/eclipse-zenoh/zenoh-c.git . && \
@@ -26,13 +34,6 @@ RUN git clone https://github.com/eclipse-zenoh/zenoh-cpp.git . && \
     cmake ../zenoh-cpp/install -DCMAKE_INSTALL_PREFIX=/root/libs/zenohcxx && \
     cmake --install .
 
-WORKDIR /root/protobuf
-
-RUN git clone https://github.com/lasyman/protobuf.git . && \
-    cd protobuf && mkdir build && cd build && \
-    cmake .. -DCMAKE_INSTALL_PREFIX=/root/libs/protobuf -Dprotobuf_BUILD_TESTS=OFF && \
-    make && \
-    make install
 
 # stage 3 
 FROM env
