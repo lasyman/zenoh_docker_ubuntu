@@ -28,7 +28,7 @@ RUN git clone https://github.com/eclipse-zenoh/zenoh-cpp.git . && \
 
 WORKDIR /root/protobuf
 
-RUN git clone https://gitea.lyy520.fun:8443/CppUtil/protobuf.git . && \
+RUN git clone https://${{ secrets.GITEA_USERNAME }}:${{ secrets.GITEA_PASSWORD }}@gitea.lyy520.fun:8443/CppUtil/protobuf.git . && \
     cd protobuf && mkdir build && cd build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=/root/libs/protobuf -Dprotobuf_BUILD_TESTS=OFF && \
     make && \
