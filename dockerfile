@@ -26,12 +26,21 @@ RUN git clone https://github.com/eclipse-zenoh/zenoh-cpp.git . && \
     cmake ../zenoh-cpp/install -DCMAKE_INSTALL_PREFIX=/root/libs/zenohcxx && \
     cmake --install .
 
+WORKDIR /root/protobuf
+
+RUN git clone -b v3.21.0 https://github.com/protocolbuffers/protobuf.git . && \
+    cd protobuf && mkdir build && cd build && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=/root/libs/protobuf -Dprotobuf_BUILD_TESTS=OFF && \
+    make && \
+    make install
+
 # stage 3 
 FROM env
 
 
 COPY --from=build /root/libs/zenohc /usr/local
 COPY --from=build /root/libs/zenohcxx /usr/local
+COPY --from=build /root/libs/protobuf /usr/local
 
 WORKDIR /root
 
